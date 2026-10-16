@@ -4,8 +4,8 @@ export const site = {
   title: "PureWater — Pure Water. Smarter Access.",
   description:
     "PureWater is an early-stage startup developing smart, automated chilled drinking-water vending machines with QR-based digital payments and controlled dispensing.",
-  // Placeholder — replace with the real startup inbox before launch.
-  email: "hello@purewater.example",
+  email: "ranjeetgupta.work@gmail.com",
+  phone: "7858823496",
   // Add real profile URLs when available. Empty entries are hidden.
   socials: {
     linkedin: "",

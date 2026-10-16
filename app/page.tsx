@@ -10,6 +10,7 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  Phone,
   QrCode,
   ShieldCheck,
   ShoppingBag,
@@ -345,6 +346,15 @@ export default function Home() {
                 <p className="font-semibold text-navy">Email</p>
                 <a href={`mailto:${site.email}`} className="text-slate-600 hover:text-brand">
                   {site.email}
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <Phone className="mt-0.5 h-5 w-5 text-brand" aria-hidden />
+              <div>
+                <p className="font-semibold text-navy">Phone</p>
+                <a href={`tel:${site.phone}`} className="text-slate-600 hover:text-brand">
+                  {site.phone}
                 </a>
               </div>
             </div>

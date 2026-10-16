@@ -18,7 +18,7 @@ terminal. In production it returns a clear "not configured" error until the vari
 
 | What | Where |
 | --- | --- |
-| Startup email, social links | `lib/site.ts` |
+| Contact email, phone, social links | `lib/site.ts` |
 | Feature status badges (prototype / planned / working) | `steps` and `tech` arrays in `app/page.tsx` |
 | Hero product image (concept render) | `public/images/purewater-machine.jpg`, used in `app/page.tsx` |
 | Social share preview image | `app/opengraph-image.jpg` |
