@@ -1,8 +1,18 @@
-node_modules
-.next
-out
-.env*.local
-.env
+# Dependencies & builds
+node_modules/
+.next/
+out/
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Secrets (commit only *.example files)
+.env
+.env*.local
+firmware/**/secrets.h
+
+# Tooling / OS
+.serena/
+.vscode/
+.DS_Store
+Thumbs.db

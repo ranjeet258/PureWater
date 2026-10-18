@@ -1,0 +1,29 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Water Vending Test</title><style>body{font-family:system-ui;max-width:620px;margin:40px auto;padding:0 16px}button{padding:12px 18px;font-size:16px}#status{margin-top:18px;padding:12px;background:#f2f4f7;border-radius:8px;white-space:pre-wrap}</style></head>
+<body><h1>Chilled Water Vending — Test</h1><p>Razorpay <b>TEST MODE</b> only. No real payment should be collected.</p>
+<p>Demo price: ₹<span id="price">5.00</span></p><button id="pay">Pay ₹5 in Test Mode</button><div id="status">Ready. Click to create a test order.</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script><script>
+const box=document.getElementById("status"), btn=document.getElementById("pay"); const status=s=>box.textContent=s;
+async function start(){
+ btn.disabled=true;
+ try{
+  status("Creating test order...");
+  const r=await fetch("/api/create-order",{method:"POST"}), o=await r.json();
+  if(!r.ok) throw new Error(o.error||"Order creation failed");
+  document.getElementById("price").textContent=(o.amount/100).toFixed(2);
+  const checkout=new Razorpay({key:o.keyId,amount:o.amount,currency:o.currency,name:"Water Vending Prototype",description:"ESP32 LED test — test only",order_id:o.orderId,
+   handler:async function(response){
+    status("Verifying payment signature on backend...");
+    const vr=await fetch("/api/verify-payment",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(response)});
+    const result=await vr.json();
+    status(vr.ok&&result.verified?"Verified in TEST MODE. ESP32 should blink shortly.\\nOrder: "+o.orderId:"Verification failed: "+(result.error||"Unknown error"));
+   },
+   modal:{ondismiss:()=>{status("Checkout closed. No authorization unless verification succeeded.");btn.disabled=false;}},
+   theme:{color:"#2563eb"}});
+  checkout.on("payment.failed",e=>{status("Test payment failed: "+(e.error?.description||"Unknown error"));btn.disabled=false;});
+  checkout.open(); setTimeout(()=>btn.disabled=false,3000);
+ }catch(e){status("Error: "+e.message);btn.disabled=false;}
+}
+btn.addEventListener("click",start);
+</script></body></html>
